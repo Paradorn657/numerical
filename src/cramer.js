@@ -48,7 +48,7 @@ const Cramer = () => {
 
         xMatrix.push("X"+(i+1));
     }
-    setXMatrix(xMatrix)
+    setXMatrix(xMatrix);
     
 
     const bmatrix = [];
@@ -274,11 +274,20 @@ const Cramer = () => {
       </Form>
 
       
-      <div className="matrix-input-container">
-        <div className="matrix-input">{renderMatrix()}</div>
-        <div className="matrix-input" >{renderXmatrix()}</div>
-        <div className="matrix-input">{renderBmatrix()}</div>
-      </div>
+      <Container className="matrix-input-container">
+        <div className="matrix-input">
+          {renderMatrix()}
+        </div>
+        <div className="matrix-input">
+          {renderXmatrix()}
+        </div>
+        <div className="matrix-input">
+          {renderBmatrix()}
+        </div>
+        
+        
+        
+      </Container>
 
       
 

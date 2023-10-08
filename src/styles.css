@@ -1,5 +1,4 @@
 .matrix-container {
-    margin-top: 3%;
     display: flex;
     flex-direction: column; /* Aligns input rows down */
   }
