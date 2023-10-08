@@ -33,7 +33,7 @@ export default function navbar() {
 
       <NavDropdown title= "Matrix">
 
-        <NavDropdown.Item href="/graphical">graphical</NavDropdown.Item>
+        <NavDropdown.Item href="/cramer_rule">Cramer rule</NavDropdown.Item>
         <NavDropdown.Item href="/bisection">bisection</NavDropdown.Item>
         <NavDropdown.Item href="/false_position">false position</NavDropdown.Item>
         <NavDropdown.Item href="/one_point_iteration">one point iteration</NavDropdown.Item>

@@ -90,21 +90,26 @@ const Falseposition = () => {
         let x1 = ((xL * f_xR) - (xR * f_xL)) / (f_xR - f_xL);
     
         while (Math.abs((x1 - x1_old) / x1) * 100 > 0.000001) {
-            x1 = ((xL * f_xR) - (xR * f_xL)) / (f_xR - f_xL);
+            // x1 = ((xL * f_xR) - (xR * f_xL)) / (f_xR - f_xL);
     
             scope = {
                 x:x1,
             }
+
+
             let f_x1 = evaluate(Equation,scope);
     
             iter ++;
             if (f_x1 * f_xR > 0) {
                 
-                xR = x1;      
-            } else if (f_x1 * f_xR < 0) {
+                xR = x1;     
+                f_xR = f_x1; 
+            } 
+            else{
 
                 
                 xL = x1;
+                f_xL = f_x1;
             }
 
 

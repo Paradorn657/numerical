@@ -13,6 +13,7 @@ import Onepoint from './onepoint';
 import Newton from './newton_raphson';
 
 import Secant from './secant';
+import Cramer from './cramer';
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
     case "/secant":
             component = <Secant/>
             break;
+
+    case "/cramer_rule":
+              component = <Cramer/>
+              break;
 
   }
 
