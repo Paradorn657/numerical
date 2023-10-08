@@ -48,7 +48,7 @@ const Cramer = () => {
 
         xMatrix.push("X"+(i+1));
     }
-    setXMatrix(xMatrix);
+    setXMatrix(xMatrix)
     
 
     const bmatrix = [];
