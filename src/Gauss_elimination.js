@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Form, Button ,Alert} from 'react-bootstrap';
 
 
-const Cramer = () => {
+const Gauss = () => {
   const [matrix, setMatrix] = useState([]);
   const [result, setresult] = useState([]);
 
@@ -101,30 +101,62 @@ const Cramer = () => {
 }
 
 
-  function solveSystem(coefficients, constants) {
-    const n = coefficients.length;
-    const solutions = new Array(n);
+function solveSystem(A, B) {
+    const n = A.length;
+    const X = new Array(n).fill(0);
 
-    const determinantA = determinant(coefficients);
-
+    // Augment the A matrix with the B matrix
+    const augmentedMatrix = new Array(n);
     for (let i = 0; i < n; i++) {
-        const modifiedMatrix = new Array(n).fill(0).map(() => new Array(n));
+        augmentedMatrix[i] = new Array(n + 1);
         for (let j = 0; j < n; j++) {
-            for (let k = 0; k < n; k++) {
-                if (k === i) {
-                    modifiedMatrix[j][k] = constants[j];
-                } else {
-                    modifiedMatrix[j][k] = coefficients[j][k];
-                }
+            augmentedMatrix[i][j] = A[i][j];
+        }
+        augmentedMatrix[i][n] = B[i];
+    }
+
+    // Gaussian elimination
+    for (let i = 0; i < n; i++) {
+        // Partial pivoting
+        let maxRow = i;
+        for (let k = i + 1; k < n; k++) {
+            if (Math.abs(augmentedMatrix[k][i]) > Math.abs(augmentedMatrix[maxRow][i])) {
+                maxRow = k;
             }
         }
-        solutions[i] = determinant(modifiedMatrix) / determinantA;
+        [augmentedMatrix[i], augmentedMatrix[maxRow]] = [augmentedMatrix[maxRow], augmentedMatrix[i]];
+
+        // Elimination
+        for (let k = i + 1; k < n; k++) {
+            const factor = augmentedMatrix[k][i] / augmentedMatrix[i][i];
+            for (let j = i; j <= n; j++) {
+                augmentedMatrix[k][j] -= factor * augmentedMatrix[i][j];
+            }
+        }
     }
-    return solutions;
+
+    // Back-substitution
+    for (let i = n - 1; i >= 0; i--) {
+        X[i] = augmentedMatrix[i][n];
+        for (let j = i + 1; j < n; j++) {
+            X[i] -= augmentedMatrix[i][j] * X[j];
+        }
+        X[i] /= augmentedMatrix[i][i];
+    }
+
+    return X;
+}
+
+function swapRows(matrix, i, j) {
+    const temp = matrix[i];
+    matrix[i] = matrix[j];
+    matrix[j] = temp;
 }
 
 
-  const calCramer = () => {
+
+
+  const calGauss = () => {
     
 
     const solutions = solveSystem(matrix, Bmatrix);
@@ -233,7 +265,7 @@ const Cramer = () => {
 
   return (
     <Container>
-      <h1>Cramer RULE</h1>
+      <h1>Gauss elimination Method</h1>
       <Form>
         <Form.Group controlId="rowInput">
           <Form.Label style={{marginTop: "20px" }} >Number of Varieble</Form.Label>
@@ -255,8 +287,8 @@ const Cramer = () => {
 
 
 
-        <Button variant="secondary" onClick={calCramer} style={{marginLeft: "20px" , marginTop: "20px" }}>
-          Calculate Cramer
+        <Button variant="secondary" onClick={calGauss} style={{marginLeft: "20px" , marginTop: "20px" }}>
+          Calculate Gauss elimination
       </Button>
         
         </div>
@@ -282,6 +314,7 @@ const Cramer = () => {
 
       
 
+
         {
           result.map((x,index)=>
           <Alert style={{marginTop: "20px" }}>
@@ -291,6 +324,8 @@ const Cramer = () => {
           </Alert>
           )
         }
+
+        
       
       
     </Container>
@@ -299,4 +334,4 @@ const Cramer = () => {
 
 
 
-export default Cramer;
+export default Gauss;

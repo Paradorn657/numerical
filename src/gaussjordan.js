@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Form, Button ,Alert} from 'react-bootstrap';
 
 
-const Cramer = () => {
+const Gauss_jordan = () => {
   const [matrix, setMatrix] = useState([]);
   const [result, setresult] = useState([]);
 
@@ -101,37 +101,85 @@ const Cramer = () => {
 }
 
 
-  function solveSystem(coefficients, constants) {
-    const n = coefficients.length;
-    const solutions = new Array(n);
+function solveSystem(A, B) {
+    const rowCount = A.length;
+    const colCount = A[0].length;
 
-    const determinantA = determinant(coefficients);
+    // Augment the A matrix with the B matrix
+    const augmentedMatrix = new Array(rowCount);
+    for (let i = 0; i < rowCount; i++) {
+        augmentedMatrix[i] = new Array(colCount + 1);
+        for (let j = 0; j < colCount; j++) {
+            augmentedMatrix[i][j] = A[i][j];
+        }
+        augmentedMatrix[i][colCount] = B[i];
+    }
 
-    for (let i = 0; i < n; i++) {
-        const modifiedMatrix = new Array(n).fill(0).map(() => new Array(n));
-        for (let j = 0; j < n; j++) {
-            for (let k = 0; k < n; k++) {
-                if (k === i) {
-                    modifiedMatrix[j][k] = constants[j];
-                } else {
-                    modifiedMatrix[j][k] = coefficients[j][k];
+    // Perform Gauss-Jordan elimination
+    for (let pivotRow = 0; pivotRow < rowCount; pivotRow++) {
+        const pivot = augmentedMatrix[pivotRow][pivotRow];
+
+        // Ensure the pivot is non-zero; if it's zero, swap rows if possible
+        if (pivot === 0) {
+            let swapped = false;
+            for (let i = pivotRow + 1; i < rowCount; i++) {
+                if (augmentedMatrix[i][pivotRow] !== 0) {
+                    swapRows(augmentedMatrix, pivotRow, i);
+                    swapped = true;
+                    break;
+                }
+            }
+            if (!swapped) {
+                // The system is singular (no unique solution)
+                return null;
+            }
+        }
+
+        // Normalize the pivot row
+        for (let j = pivotRow; j < colCount + 1; j++) {
+            augmentedMatrix[pivotRow][j] /= pivot;
+        }
+
+        // Eliminate non-zero entries above and below the pivot
+        for (let i = 0; i < rowCount; i++) {
+            if (i !== pivotRow) {
+                const factor = augmentedMatrix[i][pivotRow];
+                for (let j = pivotRow; j < colCount + 1; j++) {
+                    augmentedMatrix[i][j] -= factor * augmentedMatrix[pivotRow][j];
                 }
             }
         }
-        solutions[i] = determinant(modifiedMatrix) / determinantA;
     }
-    return solutions;
+
+    console.log(augmentedMatrix);
+
+    // Extract the solution from the last column of the augmented matrix
+    const solution = new Array(rowCount);
+    for (let i = 0; i < rowCount; i++) {
+        solution[i] = augmentedMatrix[i][colCount];
+    }
+
+    return solution;
 }
 
 
-  const calCramer = () => {
+function swapRows(matrix, row1, row2) {
+    const temp = matrix[row1];
+    matrix[row1] = matrix[row2];
+    matrix[row2] = temp;
+}
+
+
+
+
+  const calGauss_jordan = () => {
     
 
     const solutions = solveSystem(matrix, Bmatrix);
 
     setresult(solutions);
 
-    console.log(solutions);
+    
 
 
   }
@@ -233,7 +281,7 @@ const Cramer = () => {
 
   return (
     <Container>
-      <h1>Cramer RULE</h1>
+      <h1>Gauss Jordan Method</h1>
       <Form>
         <Form.Group controlId="rowInput">
           <Form.Label style={{marginTop: "20px" }} >Number of Varieble</Form.Label>
@@ -255,8 +303,8 @@ const Cramer = () => {
 
 
 
-        <Button variant="secondary" onClick={calCramer} style={{marginLeft: "20px" , marginTop: "20px" }}>
-          Calculate Cramer
+        <Button variant="secondary" onClick={calGauss_jordan} style={{marginLeft: "20px" , marginTop: "20px" }}>
+          Calculate Gauss elimination
       </Button>
         
         </div>
@@ -282,6 +330,7 @@ const Cramer = () => {
 
       
 
+
         {
           result.map((x,index)=>
           <Alert style={{marginTop: "20px" }}>
@@ -291,6 +340,8 @@ const Cramer = () => {
           </Alert>
           )
         }
+
+        
       
       
     </Container>
@@ -299,4 +350,4 @@ const Cramer = () => {
 
 
 
-export default Cramer;
+export default Gauss_jordan;

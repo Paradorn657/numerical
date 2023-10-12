@@ -14,6 +14,18 @@ import Newton from './newton_raphson';
 
 import Secant from './secant';
 import Cramer from './cramer';
+import Gauss from './Gauss_elimination';
+import Gauss_jordan from './gaussjordan';
+
+import Matrix_inverse from './Matrix_inversion';
+
+import LU_method from './Lu_decompose';
+import Cholesky from './cholesky';
+
+import Jacobi from './jacobbi';
+import Seidel from './gauss_seidel';
+
+import Conjugate from './conjugateGradient';
 
 
 function App() {
@@ -44,6 +56,33 @@ function App() {
     case "/cramer_rule":
               component = <Cramer/>
               break;
+   case "/gauss_eliminate":
+                component = <Gauss/>
+                break;
+   case "/gauss_jordan":
+                component = <Gauss_jordan/>
+                break;   
+    case "/matrix_inversion":
+                component = <Matrix_inverse/>
+                break;               
+    case "/LU_method":
+                component = <LU_method/>
+                break;       
+    case "/Cholesky":
+                component = <Cholesky/>
+                break;    
+    case "/jacobbi":
+                component = <Jacobi/>
+                break;    
+    case "/gauss_seidel":
+                component = <Seidel/>
+                break;
+    case "/Conjugate":
+                component = <Conjugate/>
+                break;
+    
+
+    
 
   }
 
