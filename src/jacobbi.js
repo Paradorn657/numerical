@@ -10,6 +10,8 @@ const Jacobi = () => {
     const [Xmatrix, setXMatrix] = useState([]);
 
 
+    const [loop, setIteration] = useState(0);
+
     const [Bmatrix, setBMatrix] = useState([]);
 
     const [X0matrix, setx0Matrix] = useState([]);
@@ -20,7 +22,7 @@ const Jacobi = () => {
 
 
     const [showHeaders, setShowHeaders] = useState(false);
-
+    const [showHeadersIteration, setShowHeadersIteration] = useState(false);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'rows') {
@@ -87,6 +89,7 @@ const Jacobi = () => {
         const xNew = new Array(n);
     
         for (let iteration = 1; iteration <= maxIterations; iteration++) {
+
             for (let i = 0; i < n; i++) {
                 let sum = 0.0;
                 for (let j = 0; j < n; j++) {
@@ -113,6 +116,7 @@ const Jacobi = () => {
     
             if (converged) {
                 console.log(`Converged after ${iteration} iterations.`);
+                setIteration(iteration);
                 break;
             }
 
@@ -124,6 +128,7 @@ const Jacobi = () => {
             }
         }
     
+        
         return x;
     }
 
@@ -131,6 +136,7 @@ const Jacobi = () => {
 
 
     const calGauss_jordan = () => {
+        setShowHeadersIteration(true)
 
         const solution = jacobiIteration(matrix, Bmatrix, X0matrix, 1000, 0.00001);
 
@@ -318,8 +324,11 @@ const Jacobi = () => {
 
             {renderXstartmatrix()}
 
+            <div className="matrix-input-container">
+            {showHeadersIteration&& "ทำไปทั้งหมด "+loop+ "รอบ" }
+            </div>
 
-
+            
             {
                 result.map((x, index) =>
                     <Alert style={{ marginTop: "20px" }}>

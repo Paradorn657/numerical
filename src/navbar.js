@@ -46,6 +46,16 @@ export default function navbar() {
 
       </NavDropdown>
 
+      <NavDropdown title= "Interpolation">
+
+        <NavDropdown.Item href="/newton">Newton divided-differences</NavDropdown.Item>
+        <NavDropdown.Item href="/Lagrange">Lagrange polynomials</NavDropdown.Item>
+        <NavDropdown.Item href="/Spline">Spline Interpolation</NavDropdown.Item>
+        
+
+
+      </NavDropdown>
+
 
       </Nav>
     </Container>

@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
+
 import Bisec from './bisection.js';
 import Graphic from './graphical';
 import Navbar from './navbar';
@@ -26,6 +28,8 @@ import Jacobi from './jacobbi';
 import Seidel from './gauss_seidel';
 
 import Conjugate from './conjugateGradient';
+
+import Newton_interpolation from './newton';
 
 
 function App() {
@@ -79,6 +83,9 @@ function App() {
                 break;
     case "/Conjugate":
                 component = <Conjugate/>
+                break;
+    case "/newton":
+                component = <Newton_interpolation/>
                 break;
     
 

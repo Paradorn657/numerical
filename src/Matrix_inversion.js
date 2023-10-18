@@ -16,10 +16,12 @@ const Matrix_inverse = () => {
     const [columns, setColumns] = useState(2);
 
 
-    const [calbuttons, setcalButtons] = useState([]);
+    const [Inverse, setInverse] = useState([]);
 
 
     const [showHeaders, setShowHeaders] = useState(false);
+
+    const [showHeadersInverse, setShowHeadersInverse] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -102,9 +104,9 @@ const Matrix_inverse = () => {
     function matrixmul(A_Invers, B) {
         const n = A_Invers.length;
         const m = B[0].length;
-    
+
         const x = new Array(n).fill().map(() => new Array(m));
-    
+
         for (let i = 0; i < B.length; i++) {
             let sum = 0;
             for (let j = 0; j < A_Invers.length; j++) {
@@ -112,32 +114,36 @@ const Matrix_inverse = () => {
             }
             x[i][0] = sum;
         }
-    
+
         return x;
     }
-    
 
 
 
 
 
-    const calGauss_jordan = () => {
+
+    const calMatrix_inversion = () => {
+
+        setShowHeadersInverse(true);
         const A_I = gaussjordan(Generatematrix_AI(matrix))
 
         const inverseMatrix = [];
 
         for (let i = 0; i < rows; i++) {
             inverseMatrix[i] = [];
-            for (let j = columns; j < columns*2; j++) {
+            for (let j = columns; j < columns * 2; j++) {
                 inverseMatrix[i].push(A_I[i][j]);
             }
         }
 
-        
-        console.log(A_I)
-        console.log(inverseMatrix);
 
-        const solutions = matrixmul(inverseMatrix,Bmatrix);
+        console.log(A_I)
+
+
+        console.log(inverseMatrix);
+        setInverse(inverseMatrix);
+        const solutions = matrixmul(inverseMatrix, Bmatrix);
 
         console.log(solutions);
 
@@ -268,6 +274,35 @@ const Matrix_inverse = () => {
         );
     };
 
+    const renderAinversematrix = () => {
+        return (
+
+
+            <div className="matrix-container">
+
+                {showHeadersInverse && <h3>A Inverse</h3>}
+
+                {Inverse.map((row, rowIndex) => (
+                    <div key={rowIndex} className="matrix-row">
+                        {row.map((cell, colIndex) => (
+                            <input
+                                style={{ width:"50%" }}
+                                className="matrix-cell form-control"
+                                key={colIndex}
+                                type="text"
+                                value={cell}
+                            />
+                        ))}
+                    </div>
+                )
+                )}
+
+
+            </div>
+
+        );
+    };
+
 
     return (
         <Container>
@@ -293,8 +328,8 @@ const Matrix_inverse = () => {
 
 
 
-                    <Button variant="secondary" onClick={calGauss_jordan} style={{ marginLeft: "20px", marginTop: "20px" }}>
-                        Calculate Gauss elimination
+                    <Button variant="secondary" onClick={calMatrix_inversion} style={{ marginLeft: "20px", marginTop: "20px" }}>
+                        Calculate Matrix Inversion method
                     </Button>
 
                 </div>
@@ -316,7 +351,10 @@ const Matrix_inverse = () => {
 
 
 
+
+
             </div >
+
 
 
 
@@ -330,6 +368,11 @@ const Matrix_inverse = () => {
                     </Alert>
                 )
             }
+
+
+            <div className="matrix-input" style={{ marginTop: "40px" }} >
+                {renderAinversematrix()}
+            </div>
 
 
 

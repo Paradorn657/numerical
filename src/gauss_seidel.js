@@ -16,6 +16,8 @@ const Seidel = () => {
     const [rows, setRows] = useState(2);
     const [columns, setColumns] = useState(2);
 
+    const [loop, setIteration] = useState(0);
+    const [showHeadersIteration, setShowHeadersIteration] = useState(false);
 
 
 
@@ -112,6 +114,9 @@ const Seidel = () => {
     
             if (converged) {
                 console.log(`Converged after ${iteration} iterations.`);
+
+                setIteration(iteration);
+
                 break;
             }
     
@@ -128,6 +133,7 @@ const Seidel = () => {
 
 
     const calGauss_jordan = () => {
+        setShowHeadersIteration(true)
 
         const solution = gaussSeidelIteration(matrix, Bmatrix, X0matrix, 1000, 0.00001);
 
@@ -316,6 +322,9 @@ const Seidel = () => {
             {renderXstartmatrix()}
 
 
+            <div className="matrix-input-container">
+            {showHeadersIteration&& "ทำไปทั้งหมด "+loop+ "รอบ" }
+            </div>
 
             {
                 result.map((x, index) =>

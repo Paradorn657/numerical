@@ -134,7 +134,6 @@ function solveSystem(A, B) {
             }
         }
     }
-
     // Back-substitution
     for (let i = n - 1; i >= 0; i--) {
         X[i] = augmentedMatrix[i][n];

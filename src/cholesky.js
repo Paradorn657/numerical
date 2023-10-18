@@ -17,7 +17,7 @@ const Cholesky = () => {
     const [columns, setColumns] = useState(2);
 
 
-    const [calbuttons, setcalButtons] = useState([]);
+    const [Error, setError] = useState(0);
 
 
     const [showHeaders, setShowHeaders] = useState(false);
@@ -72,21 +72,25 @@ const Cholesky = () => {
     function choleskyDecomposition(matrix) {
         const n = matrix.length;
         const lowerTriangular = new Array(n).fill().map(() => new Array(n).fill(0));
-    
+
         // Check if the matrix is square
         if (matrix.some(row => row.length !== n)) {
-            throw new Error("Input matrix must be square.");
+            // throw new Error("Input matrix must be square.");
+            setError(1);
+            return null;
         }
-    
+
         // Check if the matrix is symmetric
         for (let i = 0; i < n; i++) {
             for (let j = 0; j < i; j++) {
                 if (matrix[i][j] !== matrix[j][i]) {
-                    throw new Error("Input matrix must be symmetric.");
+                    // throw new Error("Input matrix must be symmetric.");
+                    setError(2);
+
                 }
             }
         }
-    
+
         for (let i = 0; i < n; i++) {
             for (let j = 0; j <= i; j++) {
                 let sum = 0.0;
@@ -96,7 +100,9 @@ const Cholesky = () => {
                     }
                     const diagonalValue = matrix[j][j] - sum;
                     if (diagonalValue <= 0) {
-                        throw new Error("Input matrix is not positive definite.");
+                        // alert("Input matrix is not positive definite.");
+                        setError(3);
+
                     }
                     lowerTriangular[j][j] = Math.sqrt(diagonalValue);
                 } else {
@@ -107,10 +113,41 @@ const Cholesky = () => {
                 }
             }
         }
-    
+        
+
         return lowerTriangular;
     }
-    
+
+    function alert() {
+        var text;
+
+        if (Error == 1) {
+            text = "Input matrix must be square."
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Eror!</strong> {text}
+                </div>)
+        }
+        else if (Error == 2) {
+            text = "Input matrix must be symmetric."
+
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Eror!</strong> {text}
+                </div>)
+        }
+        else if (Error == 3) {
+            text = "Input matrix is not positive definite."
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Eror!</strong> {text}
+                </div>)
+        }
+
+
+
+    }
+
 
     function transpose(matrix) {
         const rows = matrix.length;
@@ -158,6 +195,9 @@ const Cholesky = () => {
 
 
     const calGauss_jordan = () => {
+        setError(0);
+        const NUll_matrix = []
+        setresult(NUll_matrix)
 
         const L = choleskyDecomposition(matrix);
 
@@ -169,8 +209,14 @@ const Cholesky = () => {
         const X = backwardSubstitution(L_T, Y);
 
 
-        setresult(X);
-        
+        const hasNaN = X.some(value => isNaN(value));
+
+        if (!hasNaN) {
+            setresult(X);
+        } 
+
+
+
 
 
 
@@ -274,7 +320,12 @@ const Cholesky = () => {
 
 
     return (
+
+
         <Container>
+
+            {alert()}
+
             <h1>Cholesky Decomposition Method</h1>
             <Form>
                 <Form.Group controlId="rowInput">
@@ -327,6 +378,8 @@ const Cholesky = () => {
 
             {
                 result.map((x, index) =>
+
+
                     <Alert style={{ marginTop: "20px" }}>
 
                         {`X${index + 1}: ${x}`}
