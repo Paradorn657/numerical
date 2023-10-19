@@ -303,7 +303,7 @@ const Conjugate = () => {
 
 
                     <Button variant="secondary" onClick={calGauss_jordan} style={{ marginLeft: "20px", marginTop: "20px" }}>
-                        Calculate Gauss elimination
+                        Calculate Conjugate Gradient
                     </Button>
 
                 </div>

@@ -26,9 +26,6 @@ const Newton_interpolation = () => {
         if (name === 'Ndata') {
             setnData(value);
         }
-
-
-
     };
 
     const [nUsepoint, setnUsepoint] = useState(2);

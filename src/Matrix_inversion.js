@@ -370,7 +370,7 @@ const Matrix_inverse = () => {
             }
 
 
-            <div className="matrix-input" style={{ marginTop: "40px" }} >
+            <div className="matrix-input" style={{ marginTop: "40px" , marginBottom:"80px" }} >
                 {renderAinversematrix()}
             </div>
 
