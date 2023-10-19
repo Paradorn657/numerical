@@ -1,3 +1,4 @@
+import { row } from 'mathjs';
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 
@@ -150,6 +151,31 @@ const Matrix_inverse = () => {
         setresult(solutions)
 
     }
+
+    // const GaussJordan = (matrix, Imatrix) => {
+    //     for (let i = 0; i < rows; i++) {
+    //         if (matrix[i][i] == 0) {
+    //             matrix[i][i] = 1e-15;
+    //         }
+    //         let fixed = matrix[i][i];
+
+    //         for (let j = 0; j < rows; j++) {
+    //             Imatrix[i][j] /= fixed;
+    //             matrix[i][j] /= fixed;
+    //         }
+    //         for (let j = 0; j < rows; j++) {
+    //             if (i == j) continue;
+    //             let factor = matrix[j][i];
+    //             for (let k = 0; k < rows; k++) {
+    //                 Imatrix[j][k] -= factor * Imatrix[i][k];
+    //                 matrix[j][k] -= factor * matrix[i][k];
+    //             }
+    //         }
+    //     }
+    // }
+
+
+
 
 
     function gaussjordan(A) {
