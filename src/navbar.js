@@ -14,7 +14,7 @@ export default function navbar() {
     <Container>
 
 
-      <Navbar.Brand href="#home">Numerical method</Navbar.Brand>
+      <Navbar.Brand href="/home">Numerical method</Navbar.Brand>
       <Nav className="me-auto">
 
 
@@ -49,12 +49,32 @@ export default function navbar() {
       <NavDropdown title= "Interpolation">
 
         <NavDropdown.Item href="/newton">Newton divided-differences</NavDropdown.Item>
-        <NavDropdown.Item href="/Lagrange">Lagrange polynomials</NavDropdown.Item>
+        <NavDropdown.Item href="/Lagrance">Lagrange polynomials</NavDropdown.Item>
         <NavDropdown.Item href="/Spline">Spline Interpolation</NavDropdown.Item>
         
 
 
       </NavDropdown>
+
+      <NavDropdown title= "Least Square Regression">
+        <NavDropdown.Item href="/LinearRegression">Linear Regression</NavDropdown.Item>
+        <NavDropdown.Item href="/MutipleRegression">Mutiple Linear Regression</NavDropdown.Item>
+      </NavDropdown>
+
+      <NavDropdown title= "Integration">
+        <NavDropdown.Item href="/Integration_singleTrape">Single Trapezoidal Rule</NavDropdown.Item>
+        <NavDropdown.Item href="/Integration_CompositeTrape">Composite Trapezoid Rule</NavDropdown.Item>
+
+        <NavDropdown.Item href="/Integration_simpson">Simpsons Rule</NavDropdown.Item>
+        <NavDropdown.Item href="/Integration_compositeSimpsons">Composite Simpsons Rule</NavDropdown.Item>
+
+      </NavDropdown>
+
+      <NavDropdown title= "Difference">
+        <NavDropdown.Item href="/Difference_first">First Divide-Differences</NavDropdown.Item>
+        <NavDropdown.Item href="/Difference_second">Second Divide-Differences</NavDropdown.Item>
+      </NavDropdown>
+
 
 
       </Nav>
