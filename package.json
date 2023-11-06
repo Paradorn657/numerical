@@ -14,9 +14,11 @@
     "mathjs": "^11.11.1",
     "mathjs-simple-integral": "^0.1.1",
     "numerical": "^0.2.4",
+    "plotly": "^1.0.6",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
     "react-dom": "^18.2.0",
+    "react-plotly.js": "^2.6.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },

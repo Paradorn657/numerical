@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Button, Container, Form, Table } from "react-bootstrap";
 import { evaluate } from 'mathjs'
+import Plot from 'react-plotly.js';
 
 
 const Graphic = () => {
@@ -11,6 +12,7 @@ const Graphic = () => {
     const [html, setHtml] = useState(null);
     const [X_start, setX_start] = useState(0)
     const [X, setX] = useState(0)
+    const [graphData, setGraphData] = useState(null);
 
 
     const inputEquation = (event) => {
@@ -27,23 +29,32 @@ const Graphic = () => {
 
         var scope;
 
+
         let x_old = 0;
         let x = x_start;
+
+        const data = [];
 
         scope = {
             x:x,
         }
         let y = evaluate(Equation,scope);
         
+        
         while (y !== 0) {
+            let y_new = evaluate(Equation,{x:x});
+            data.push({ x, y_new});
             x = x + 1;
+
             console.log(x);
 
             scope = {
                 x:x,
             }
-            let y_new = evaluate(Equation,scope);
-        
+            y_new = evaluate(Equation,scope);
+            data.push({ x, y_new});
+            
+            
             if (y_new * y < 0) {
                 x = x - 1;
                 while (Math.abs(x - x_old / x) * 100 > 0.000001) {
@@ -53,6 +64,9 @@ const Graphic = () => {
                         x:x,
                     }
                     y_new = evaluate(Equation,scope);
+
+                    data.push({ x, y_new});
+
                     if (y_new * y < 0) {
                         break;
                     }
@@ -64,6 +78,7 @@ const Graphic = () => {
         
             x_old = x;
         }
+        setGraphData(data);
         
         setX(x);
 
@@ -94,6 +109,32 @@ const Graphic = () => {
             <Container>
                 {html}
             </Container>
+
+            <Container>
+        {graphData && (
+          <Plot
+            data={[
+              {
+                x: graphData.map((point) => point.x),
+                y: graphData.map((point) => point.y_new),
+                type: 'scatter',
+                mode: 'lines+points',
+                marker: { color: 'blue' },
+              },
+            ]}
+            layout={{
+              width: 600,
+              height: 400,
+              title: 'Graph of the Equation',
+              xaxis: { title: 'X' },
+              yaxis: { title: 'Y' },
+            }}
+          />
+        )}
+      </Container>
+
+
+
 
         </Container>
 
