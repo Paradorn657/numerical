@@ -384,7 +384,7 @@ const Newton_interpolation = () => {
 
     const sendDataToServer = () => {
         // Prepare the data to send to the server
-        const dataToSend = Xmatrix.map((x, index) => ({ x, fx: Ymatrix[index] }));
+        // const dataToSend = [1,2]
 
         // Send the data to the server
         fetch('http://localhost:3001/create', {
@@ -392,7 +392,7 @@ const Newton_interpolation = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(dataToSend),
+            body: JSON.stringify({Xmatrix,Ymatrix}),
         })
             .then((response) => {
                 if (response.status === 201) {
@@ -404,6 +404,26 @@ const Newton_interpolation = () => {
             .catch((error) => {
                 console.error('Error sending data:', error);
             });
+    };
+
+    const loadOlddata = async() => {
+
+        const res = await fetch('http://localhost:3001/get');
+        const data = await res.json();
+
+        console.log(data[data.length-1]);
+        
+        generateInput();
+        setnData(JSON.parse(data[data.length-1].x).length);
+        console.log(JSON.parse(data[data.length-1].x).length);
+        setXMatrix(JSON.parse(data[data.length-1].x));
+        setYMatrix(JSON.parse(data[data.length-1].fx))
+
+        
+
+        
+
+       
     };
 
 
@@ -445,9 +465,13 @@ const Newton_interpolation = () => {
                         Interpolated
                     </Button>
 
-                    {/* <Button variant="secondary" onClick={sendDataToServer} style={{ marginLeft: "20px", marginTop: "20px" }}>
+                    <Button variant="secondary" onClick={sendDataToServer} style={{ marginLeft: "20px", marginTop: "20px" }}>
                         Send Data to Server
-                    </Button> */}
+                    </Button>
+
+                    <Button variant="secondary" onClick={loadOlddata} style={{ marginLeft: "20px", marginTop: "20px" }}>
+                        load old Data
+                    </Button>
 
                 </div>
 
