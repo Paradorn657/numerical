@@ -382,6 +382,30 @@ const Newton_interpolation = () => {
         );
     };
 
+    const sendDataToServer = () => {
+        // Prepare the data to send to the server
+        const dataToSend = Xmatrix.map((x, index) => ({ x, fx: Ymatrix[index] }));
+
+        // Send the data to the server
+        fetch('http://localhost:3001/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend),
+        })
+            .then((response) => {
+                if (response.status === 201) {
+                    console.log('Data sent successfully');
+                } else {
+                    console.error('Failed to send data to the server');
+                }
+            })
+            .catch((error) => {
+                console.error('Error sending data:', error);
+            });
+    };
+
 
     return (
         <Container>
@@ -420,6 +444,10 @@ const Newton_interpolation = () => {
                     <Button variant="secondary" onClick={predict_value} style={{ marginLeft: "20px", marginTop: "20px" }}>
                         Interpolated
                     </Button>
+
+                    {/* <Button variant="secondary" onClick={sendDataToServer} style={{ marginLeft: "20px", marginTop: "20px" }}>
+                        Send Data to Server
+                    </Button> */}
 
                 </div>
 
