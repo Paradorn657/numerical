@@ -3,8 +3,12 @@ import { Button, Container, Form, Table } from "react-bootstrap";
 import math, { evaluate } from 'mathjs'
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
+import Plot from "react-plotly.js";
+
 
 import { Alert } from "react-bootstrap";
+
+
 
 
 const Compositeletrapezoid = () => {
@@ -14,8 +18,11 @@ const Compositeletrapezoid = () => {
     const [Equation, setEquation] = useState("4x^5-3x^4+x^3-6x+2")
     const [B, setB] = useState(1)
     const [A, setA] = useState(1)
-    const [N, setN] = useState(1)
+    const [N, setN] = useState(2)
 
+    const [Grapdata, setGraphData] = useState(null);
+
+    let subtrap = []
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -35,9 +42,44 @@ const Compositeletrapezoid = () => {
 
     };
 
+    const calculateSubTrapezoids = () => {
+        const h = (B - A) / N;
+        const subTrapezoids = [];
+        for (let i = A; i < B; i = i + h) {
+            const x0 = i;
+            const x1 = i + h;
+            const y0 = evaluate(Equation, { x: x0 });
+            const y1 = evaluate(Equation, { x: x1 });
+
+            subTrapezoids.push([
+                { x: x0, y: 0 },
+                { x: x0, y: y0 },
+                { x: x1, y: y1 },
+                { x: x1, y: 0 },
+                { x: x0, y: 0 },
+            ]);
+        };
+        return subTrapezoids;
+    }
+
+    const setgraphvalue = () => {
+        const data = []
+        for (let i = A; i <= B; i++) {
+
+            let fx = evaluate(Equation, { x: i })
+            data.push({ i, fx });
+
+        }
+        console.log(data)
+        setGraphData(data);
+    }
+
+
+
 
 
     const generateInput = () => {
+
         const b = B;
         const a = A;
 
@@ -49,10 +91,11 @@ const Compositeletrapezoid = () => {
 
 
         let j = 0;
+        const data = [];
         for (let i = a; i <= b; i += h) {
             i = parseFloat(i)
-            console.log("step "+i);
-            fx[j] = evaluate(Equation,{x:i});
+            console.log("step " + i);
+            fx[j] = evaluate(Equation, { x: i });
             j++;
         }
 
@@ -67,9 +110,9 @@ const Compositeletrapezoid = () => {
 
 
         console.log(I);
-
+        setgraphvalue();
         setresult([I])
-
+        
     };
 
 
@@ -142,6 +185,54 @@ const Compositeletrapezoid = () => {
                     </Alert>
                 )
             }
+
+            {
+                Grapdata && (
+
+                    <Plot
+
+                        data={[
+                            {
+                                x: Grapdata.map((point) => point.i),
+                                y: Grapdata.map((point) => point.fx),
+                                type: 'Scatter',
+                                mode: 'line',
+                                line: { color: "blue" },
+                                name: 'fx'
+                            },
+                            ...calculateSubTrapezoids().map((trapezoid, index) => ({
+                                x: trapezoid.map((point) => point.x),
+                                y: trapezoid.map((point) => point.y),
+                                fill: 'tozeroy',
+                                type: 'scatter',
+                                fillcolor: index % 2 === 0 ? 'rgba(0, 128, 0, 0.2)' : 'rgba(0, 0, 128, 0.2)',
+                                showlegend: false,
+                            }))
+
+
+                        ]}
+
+                        layout={
+                            {
+                                width: 600,
+                                height: 400,
+                                title: 'graph trapzoid',
+                                xaxis: { title: "x" },
+                                yaxis: { title: "y" },
+                                showlegend: true,
+                            }
+                        }
+
+
+
+
+                    />
+
+
+                )
+            }
+
+
 
 
 

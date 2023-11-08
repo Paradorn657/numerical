@@ -14,7 +14,7 @@ const CompositeSimpson = () => {
     const [Equation, setEquation] = useState("x^7+2x^3-1")
     const [B, setB] = useState(1)
     const [A, setA] = useState(1)
-    const [N, setN] = useState(1)
+    const [N, setN] = useState(2)
 
 
     const handleInputChange = (e) => {
@@ -38,10 +38,13 @@ const CompositeSimpson = () => {
 
 
     const generateInput = () => {
-        const b = 2;
-        const a = -1;
+        const b = B;
+        const a = A;
+
+        console.log(b)
+        console.log(a)
     
-        const h = (b - a) / N;
+        const h = (b - a) / (2*N);
     
         console.log(h);
     

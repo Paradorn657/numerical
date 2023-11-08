@@ -40,6 +40,8 @@ import Simpson from './simpson';
 import FirstDivideDiff from './firstdivideDif';
 import SecondDivideDiff from './seconddivideDiff';
 import Home from './home';
+import TestPage from './testpage.js';
+import Spline_interpolation from './spline.js';
 
 
 function App() {
@@ -100,6 +102,11 @@ function App() {
     case "/Lagrance":
       component = <Lagrance_interpolation />
       break;
+    case "/Spline":
+        component = <Spline_interpolation/>
+        break;
+
+
     case "/LinearRegression":
       component = <LinearRegression />
       break;
@@ -127,6 +134,10 @@ function App() {
     case "/Difference_second":
             component = <SecondDivideDiff/>
             break;
+
+    case "/test":
+              component = <TestPage/>
+              break;
 
 
 
