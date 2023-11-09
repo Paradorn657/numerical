@@ -42,6 +42,7 @@ import SecondDivideDiff from './seconddivideDiff';
 import Home from './home';
 import TestPage from './testpage.js';
 import Spline_interpolation from './spline.js';
+import Test2 from './test2.js';
 
 
 function App() {
@@ -138,6 +139,9 @@ function App() {
     case "/test":
               component = <TestPage/>
               break;
+    case "/test2":
+                component = <Test2/>
+                break;
 
 
 

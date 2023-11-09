@@ -75,6 +75,7 @@ export default function navbar() {
         <NavDropdown.Item href="/Difference_second">Second Divide-Differences</NavDropdown.Item>
         
         <NavDropdown.Item href="/test">testpage</NavDropdown.Item>
+        <NavDropdown.Item href="/test2">testpage2</NavDropdown.Item>
 
       </NavDropdown>
 

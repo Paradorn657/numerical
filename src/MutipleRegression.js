@@ -413,6 +413,23 @@ const MutipleRegression = () => {
         );
     };
 
+    const loadOlddata = async() => {
+        setShowHeaders(true);
+
+        const res = await fetch('http://localhost:3001/getMutidata');
+        const data = await res.json();
+
+        console.log(data[0].x);
+
+        setXMatrix(JSON.parse(data[0].x));
+
+        setnOfx(JSON.parse(data[0].x).length);
+
+        setnData(JSON.parse(data[0].x)[0].length);
+        setYMatrix(JSON.parse(data[0].fx));
+        
+    };
+
 
 
     return (
@@ -442,6 +459,9 @@ const MutipleRegression = () => {
                     <Button variant="secondary" onClick={predict_value} style={{ marginLeft: "20px", marginTop: "20px" }}>
                         Calculate
                     </Button>
+
+                    <Button onClick = {loadOlddata} style={{ marginleft: "20px" }}>loadData</Button>
+
 
                 </div>
 

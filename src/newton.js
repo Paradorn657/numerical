@@ -418,11 +418,7 @@ const Newton_interpolation = () => {
         console.log(JSON.parse(data[data.length-1].x).length);
         setXMatrix(JSON.parse(data[data.length-1].x));
         setYMatrix(JSON.parse(data[data.length-1].fx))
-
-        
-
-        
-
+ 
        
     };
 
